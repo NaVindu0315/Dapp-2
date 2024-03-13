@@ -111,27 +111,26 @@ class _HomeState extends State<Home> {
               Row(
                 children: [
                   Spacer(),
-                  Text(
-                    'HI',
-                    style: TextStyle(fontSize: 15.0),
-                  ),
                   ElevatedButton(
                       onPressed: () {
                         getbalance();
                         callFunction("get_output");
                         newfunction("get_output");
                       },
-                      child: Text('Test')),
+                      child: Text('First')),
                   Spacer(),
                 ],
               ),
               Row(
                 children: [
                   Spacer(),
-                  Text(
-                    'Balance',
-                    style: TextStyle(fontSize: 15.0),
-                  ),
+                  ElevatedButton(
+                      onPressed: () {
+                        getbalance();
+                        callFunction("get_output");
+                        newfunction("get_output");
+                      },
+                      child: Text('Name')),
                   Spacer(),
                 ],
               ),

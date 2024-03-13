@@ -88,17 +88,58 @@ class _HomeState extends State<Home> {
     return lg;
   }
 
-/*
-//me helo eka hri gye na
+  ///for name
 
-  Future<void> gethello() async {
-    List<dynamic> resultsA = await callFunction("getTotalVotesAlpha");
-    // List<dynamic> resultsB = await callFunction("getTotalVotesBeta");
-    String work = (await callFunction("get_output")) as String;
-    print(work);
-    setState(() {});
+  Future<DeployedContract> getnamecontract() async {
+    // Obtain our smart contract using rootbundle to access our json file
+    String abiFile = await rootBundle.loadString("assets/namecontract.json");
+
+    String contractAddress = "0x3787D8F37054cf954c02eAF65C8b37FB97946de5";
+
+    final namecontract = DeployedContract(
+        ContractAbi.fromJson(abiFile, "Voting"),
+        EthereumAddress.fromHex(contractAddress));
+
+    return namecontract;
   }
-*/
+
+  Future<List<dynamic>> callnameFunction(String name) async {
+    final pakeclient = Web3Client(blockchainUrl, httpClient);
+    final contract = await getnamecontract();
+    final function = contract.function(name);
+    final result = await pakeclient
+        .call(contract: contract, function: function, params: []);
+    print(result);
+    return result;
+  }
+
+  late String newvalue;
+  Future<String> namefunction(String name) async {
+    final pakeclient = Web3Client(blockchainUrl, httpClient);
+    final contract = await getnamecontract();
+    final function = contract.function(name);
+    final result = await pakeclient
+        .call(contract: contract, function: function, params: []);
+    //to remove the []
+    if (result.length == 1 && result[0] is String) {
+      newvalue = result[0] as String;
+    } else {
+      newvalue = 'Result is not a string.';
+    }
+    String lg = result.toString();
+    print(lg);
+    QuickAlert.show(
+      context: context,
+      type: QuickAlertType.success,
+      text: '$newvalue',
+      autoCloseDuration: const Duration(seconds: 4),
+      showConfirmBtn: false,
+    );
+    return lg;
+  }
+
+  ///name end
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -126,11 +167,17 @@ class _HomeState extends State<Home> {
                   Spacer(),
                   ElevatedButton(
                       onPressed: () {
-                        getbalance();
-                        callFunction("get_output");
-                        newfunction("get_output");
+                        namefunction("getname");
                       },
                       child: Text('Name')),
+                  Spacer(),
+                ],
+              ),
+              Row(
+                children: [
+                  Spacer(),
+                  ElevatedButton(
+                      onPressed: () {}, child: Text('Name and Birthday')),
                   Spacer(),
                 ],
               ),

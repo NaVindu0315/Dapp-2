@@ -1,3 +1,6 @@
+import 'dart:convert';
+
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:http/http.dart'; //You can also import the browser version
@@ -202,6 +205,13 @@ class _HomeState extends State<Home> {
   }
 
   ///end
+
+  Future<void> loadJsonFromFirebase() async {
+    final ref = FirebaseStorage.instance.ref('c/contract.json');
+    final bytes = await ref.getData();
+    final jsonString = utf8.decode(bytes!);
+    print(jsonString);
+  }
 
   @override
   Widget build(BuildContext context) {

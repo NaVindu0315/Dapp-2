@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:http/http.dart'; //You can also import the browser version
 import 'package:web3dart/web3dart.dart';
 
@@ -38,7 +39,7 @@ class _HomeState extends State<Home> {
   /// function
   /// new try
 
-  late Web3Client ethClient;
+  //late Web3Client ethClient;
 
 // Ethereum address
   final String myAddress = "0x3C3f0990BAcd02C0ed689bf4Dd6CE18cD3D6A0bF";
@@ -46,7 +47,39 @@ class _HomeState extends State<Home> {
 // URL from Infura
   final String blockchainUrl =
       "https://sepolia.infura.io/v3/4887f9655ec94842a2d3206deae69ad2";
+  Future<DeployedContract> getContract() async {
+    // Obtain our smart contract using rootbundle to access our json file
+    String abiFile = await rootBundle.loadString("assets/contract.json");
 
+    String contractAddress = "0xc691a5f193883bE1Ef4d03f0c7f60De8B88913A3";
+
+    final contract = DeployedContract(ContractAbi.fromJson(abiFile, "Voting"),
+        EthereumAddress.fromHex(contractAddress));
+
+    return contract;
+  }
+
+  Future<List<dynamic>> callFunction(String name) async {
+    final pakeclient = Web3Client(blockchainUrl, httpClient);
+    final contract = await getContract();
+    final function = contract.function(name);
+    final result = await pakeclient
+        .call(contract: contract, function: function, params: []);
+    print(result);
+    return result;
+  }
+
+/*
+//me helo eka hri gye na
+
+  Future<void> gethello() async {
+    List<dynamic> resultsA = await callFunction("getTotalVotesAlpha");
+    // List<dynamic> resultsB = await callFunction("getTotalVotesBeta");
+    String work = (await callFunction("get_output")) as String;
+    print(work);
+    setState(() {});
+  }
+*/
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -66,6 +99,7 @@ class _HomeState extends State<Home> {
                   ElevatedButton(
                       onPressed: () {
                         getbalance();
+                        callFunction("get_output");
                       },
                       child: Text('Test')),
                   Spacer(),

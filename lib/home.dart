@@ -128,16 +128,6 @@ class _HomeState extends State<Home> {
   }
 
   ///contract functions end
-/*
-  Future<List<dynamic>> callFunction(String name) async {
-    final pakeclient = Web3Client(blockchainUrl, httpClient);
-    final contract = await getContract();
-    final function = contract.function(name);
-    final result = await pakeclient
-        .call(contract: contract, function: function, params: []);
-    print(result);
-    return result;
-  }*/
 
   ///for name
 
@@ -213,41 +203,6 @@ class _HomeState extends State<Home> {
   ///name end
   ///
   /// name and age contract
-/*
-  Future<List<dynamic>> callageFunction(String name) async {
-    final pakeclient = Web3Client(blockchainUrl, httpClient);
-    final contract = await getagecontract();
-    final function = contract.function(name);
-    final result = await pakeclient
-        .call(contract: contract, function: function, params: []);
-    print(result);
-    return result;
-  }*/
-/*
-  late String newvalue2;
-  Future<String> agefunction(String name) async {
-    final pakeclient = Web3Client(blockchainUrl, httpClient);
-    final contract = await getagecontract();
-    final function = contract.function(name);
-    final result = await pakeclient
-        .call(contract: contract, function: function, params: []);
-    //to remove the []
-    if (result.length == 1 && result[0] is String) {
-      newvalue2 = result[0] as String;
-    } else {
-      newvalue2 = 'Result is not a string.';
-    }
-    String lg = result.toString();
-    print(lg);
-    QuickAlert.show(
-      context: context,
-      type: QuickAlertType.success,
-      text: '$newvalue2',
-      autoCloseDuration: const Duration(seconds: 4),
-      showConfirmBtn: false,
-    );
-    return lg;
-  }*/
 
   ///end
 
@@ -257,20 +212,7 @@ class _HomeState extends State<Home> {
     final jsonString = utf8.decode(bytes!);
     print(jsonString);
   }
-/*
-  Future<String> getjson() async {
-    final ref = FirebaseStorage.instance.ref('c/contract.json');
-    final bytes = await ref.getData();
-    final jsonString = utf8.decode(bytes!);
-    return (jsonString);
-  }*/
 
-/*
-  @override
-  void initState() {
-    super.initState();
-
-  }*/
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -286,8 +228,7 @@ class _HomeState extends State<Home> {
                   ElevatedButton(
                       onPressed: () {
                         getbalance();
-                        //callFunction("get_output");
-                        // newfunction("get_output");
+
                         callfirstfunction("get_output");
                       },
                       child: Text('First Function')),

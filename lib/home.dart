@@ -76,7 +76,7 @@ class _HomeState extends State<Home> {
 // URL from Infura
   final String blockchainUrl =
       "https://sepolia.infura.io/v3/4887f9655ec94842a2d3206deae69ad2";
-
+/*
   Future<DeployedContract> getContract() async {
     String contractAddress = "0xc691a5f193883bE1Ef4d03f0c7f60De8B88913A3";
     // Obtain our smart contract using rootbundle to access our json file
@@ -92,7 +92,7 @@ class _HomeState extends State<Home> {
 
     return contract;
   }
-
+*/
   ///functions to get contracts
   Future<DeployedContract> getnamecontract() async {
     String contractAddress = "0x3787D8F37054cf954c02eAF65C8b37FB97946de5";
@@ -116,8 +116,19 @@ class _HomeState extends State<Home> {
     return agecontract;
   }
 
-  ///contract functions end
+  Future<DeployedContract> getfirst() async {
+    String contractAddress = "0xc691a5f193883bE1Ef4d03f0c7f60De8B88913A3";
 
+    final abiFile = await getmyjson();
+    final firstcontract = DeployedContract(
+        ContractAbi.fromJson(abiFile, 'Voting'),
+        EthereumAddress.fromHex(contractAddress));
+    print("payyya");
+    return firstcontract;
+  }
+
+  ///contract functions end
+/*
   Future<List<dynamic>> callFunction(String name) async {
     final pakeclient = Web3Client(blockchainUrl, httpClient);
     final contract = await getContract();
@@ -126,40 +137,10 @@ class _HomeState extends State<Home> {
         .call(contract: contract, function: function, params: []);
     print(result);
     return result;
-  }
-
-  Future<String> newfunction(String name) async {
-    final pakeclient = Web3Client(blockchainUrl, httpClient);
-    final contract = await getContract();
-    final function = contract.function(name);
-    final result = await pakeclient
-        .call(contract: contract, function: function, params: []);
-    String lg = result.toString();
-    print(lg);
-    QuickAlert.show(
-      context: context,
-      type: QuickAlertType.success,
-      text: '$lg!',
-      autoCloseDuration: const Duration(seconds: 4),
-      showConfirmBtn: false,
-    );
-    return lg;
-  }
+  }*/
 
   ///for name
 
-  /* Future<DeployedContract> getnamecontract() async {
-    // Obtain our smart contract using rootbundle to access our json file
-    String abiFile = await getnamejson();
-
-    String contractAddress = "0x3787D8F37054cf954c02eAF65C8b37FB97946de5";
-
-    final namecontract = DeployedContract(
-        ContractAbi.fromJson(abiFile, "Voting"),
-        EthereumAddress.fromHex(contractAddress));
-
-    return namecontract;
-  }*/
   late String newname;
   Future<List<dynamic>> callnameFunction(String name) async {
     final pakeclient = Web3Client(blockchainUrl, httpClient);
@@ -206,35 +187,33 @@ class _HomeState extends State<Home> {
     return result;
   }
 
-  /* late String newvalue;
-  Future<String> namefunction(String name) async {
+  late String didu;
+  Future<List<dynamic>> callfirstfunction(String name) async {
     final pakeclient = Web3Client(blockchainUrl, httpClient);
-    final contract = await getnamecontract();
+    final contract = await getfirst();
     final function = contract.function(name);
     final result = await pakeclient
         .call(contract: contract, function: function, params: []);
-    //to remove the []
+    print(result);
     if (result.length == 1 && result[0] is String) {
-      newvalue = result[0] as String;
+      didu = result[0] as String;
     } else {
-      newvalue = 'Result is not a string.';
+      didu = 'Result is not a string.';
     }
-    String lg = result.toString();
-    print(lg);
     QuickAlert.show(
       context: context,
       type: QuickAlertType.success,
-      text: '$newvalue',
+      text: '$didu',
       autoCloseDuration: const Duration(seconds: 4),
       showConfirmBtn: false,
     );
-    return lg;
-  }*/
+    return result;
+  }
 
   ///name end
   ///
   /// name and age contract
-
+/*
   Future<List<dynamic>> callageFunction(String name) async {
     final pakeclient = Web3Client(blockchainUrl, httpClient);
     final contract = await getagecontract();
@@ -243,8 +222,8 @@ class _HomeState extends State<Home> {
         .call(contract: contract, function: function, params: []);
     print(result);
     return result;
-  }
-
+  }*/
+/*
   late String newvalue2;
   Future<String> agefunction(String name) async {
     final pakeclient = Web3Client(blockchainUrl, httpClient);
@@ -268,7 +247,7 @@ class _HomeState extends State<Home> {
       showConfirmBtn: false,
     );
     return lg;
-  }
+  }*/
 
   ///end
 
@@ -278,25 +257,12 @@ class _HomeState extends State<Home> {
     final jsonString = utf8.decode(bytes!);
     print(jsonString);
   }
-
+/*
   Future<String> getjson() async {
     final ref = FirebaseStorage.instance.ref('c/contract.json');
     final bytes = await ref.getData();
     final jsonString = utf8.decode(bytes!);
     return (jsonString);
-  }
-
-  /* Future<DeployedContract> getagecontract() async {
-    // Obtain our smart contract using rootbundle to access our json file
-    String abiFile = await getjson();
-
-    String contractAddress = "0xd34780b7c47de1Cb09E81D4e9dE74a78CC821291";
-
-    final agecontract = DeployedContract(
-        ContractAbi.fromJson(abiFile, "Voting"),
-        EthereumAddress.fromHex(contractAddress));
-
-    return agecontract;
   }*/
 
 /*
@@ -321,9 +287,10 @@ class _HomeState extends State<Home> {
                       onPressed: () {
                         getbalance();
                         //callFunction("get_output");
-                        newfunction("get_output");
+                        // newfunction("get_output");
+                        callfirstfunction("get_output");
                       },
-                      child: Text('First')),
+                      child: Text('First Function')),
                   Spacer(),
                 ],
               ),

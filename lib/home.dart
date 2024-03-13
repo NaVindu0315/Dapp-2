@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:http/http.dart'; //You can also import the browser version
 import 'package:web3dart/web3dart.dart';
+import 'package:quickalert/quickalert.dart';
 
 class Home extends StatefulWidget {
   const Home({Key? key}) : super(key: key);
@@ -100,6 +101,14 @@ class _HomeState extends State<Home> {
                       onPressed: () {
                         getbalance();
                         callFunction("get_output");
+
+                        QuickAlert.show(
+                          context: context,
+                          type: QuickAlertType.success,
+                          text: 'Transaction Completed Successfully!',
+                          autoCloseDuration: const Duration(seconds: 4),
+                          showConfirmBtn: false,
+                        );
                       },
                       child: Text('Test')),
                   Spacer(),

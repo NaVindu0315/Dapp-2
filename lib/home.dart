@@ -139,6 +139,58 @@ class _HomeState extends State<Home> {
   }
 
   ///name end
+  ///
+  /// name and age contract
+
+  Future<DeployedContract> getagecontract() async {
+    // Obtain our smart contract using rootbundle to access our json file
+    String abiFile = await rootBundle.loadString("assets/agecontract.json");
+
+    String contractAddress = "0xd34780b7c47de1Cb09E81D4e9dE74a78CC821291";
+
+    final agecontract = DeployedContract(
+        ContractAbi.fromJson(abiFile, "Voting"),
+        EthereumAddress.fromHex(contractAddress));
+
+    return agecontract;
+  }
+
+  Future<List<dynamic>> callageFunction(String name) async {
+    final pakeclient = Web3Client(blockchainUrl, httpClient);
+    final contract = await getagecontract();
+    final function = contract.function(name);
+    final result = await pakeclient
+        .call(contract: contract, function: function, params: []);
+    print(result);
+    return result;
+  }
+
+  late String newvalue2;
+  Future<String> agefunction(String name) async {
+    final pakeclient = Web3Client(blockchainUrl, httpClient);
+    final contract = await getagecontract();
+    final function = contract.function(name);
+    final result = await pakeclient
+        .call(contract: contract, function: function, params: []);
+    //to remove the []
+    if (result.length == 1 && result[0] is String) {
+      newvalue2 = result[0] as String;
+    } else {
+      newvalue2 = 'Result is not a string.';
+    }
+    String lg = result.toString();
+    print(lg);
+    QuickAlert.show(
+      context: context,
+      type: QuickAlertType.success,
+      text: '$newvalue2',
+      autoCloseDuration: const Duration(seconds: 4),
+      showConfirmBtn: false,
+    );
+    return lg;
+  }
+
+  ///end
 
   @override
   Widget build(BuildContext context) {
@@ -177,7 +229,15 @@ class _HomeState extends State<Home> {
                 children: [
                   Spacer(),
                   ElevatedButton(
-                      onPressed: () {}, child: Text('Name and Birthday')),
+                      onPressed: () {
+                        agefunction("getname");
+                      },
+                      child: Text('Name ')),
+                  ElevatedButton(
+                      onPressed: () {
+                        agefunction("getdob");
+                      },
+                      child: Text(' Birthday')),
                   Spacer(),
                 ],
               ),

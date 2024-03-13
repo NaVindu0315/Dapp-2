@@ -42,7 +42,7 @@ packages:
     source: hosted
     version: "1.18.0"
   convert:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: convert
       sha256: "0f08b14755d163f6e2134cb58222dd25ea2a2ee8a195e53983d57c075324d592"
@@ -140,7 +140,7 @@ packages:
     source: hosted
     version: "0.7.1"
   json_rpc_2:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: json_rpc_2
       sha256: "5e469bffa23899edacb7b22787780068d650b106a21c76db3c49218ab7ca447e"
@@ -233,7 +233,7 @@ packages:
     source: hosted
     version: "1.11.1"
   stream_channel:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: stream_channel
       sha256: ba2aa5d8cc609d96bbb2899c28934f9e1af5cddbd60a827822ea467161eb54e7

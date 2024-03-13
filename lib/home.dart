@@ -18,6 +18,14 @@ class _HomeState extends State<Home> {
   var credentials = EthPrivateKey.fromHex(
       "bdb3d39f69282abbce39e6d834b762a6ab093d97b94411f018b1fe607ea017e6");
 
+  ///to get
+  // Replace with placeholders (refer to security note above)
+  final String infuraEndpoint =
+      'https://sepolia.infura.io/v3/4887f9655ec94842a2d3206deae69ad2'; // Replace with actual endpoint
+  final String infuraApiKey =
+      '4887f9655ec94842a2d3206deae69ad2'; // Replace with actual API key
+  final String contractAddress = '0xc691a5f193883bE1Ef4d03f0c7f60De8B88913A3';
+
   Future<void> getbalance() async {
     var ethClient = Web3Client(apiUrl, httpClient);
     var address = credentials.address;
@@ -25,14 +33,9 @@ class _HomeState extends State<Home> {
     print(balance.getValueInUnit(EtherUnit.ether));
   }
 
-  Future<double> setbalance() async {
-    var bl = 0.0;
-    var ethClient = Web3Client(apiUrl, httpClient);
-    var address = credentials.address;
-    EtherAmount balance = await ethClient.getBalance(address);
-    bl = balance.getValueInUnit(EtherUnit.ether);
-    return bl;
-  }
+  ///function begin
+
+  /// function end
 
   @override
   Widget build(BuildContext context) {

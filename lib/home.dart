@@ -35,7 +35,17 @@ class _HomeState extends State<Home> {
 
   ///function begin
 
-  /// function end
+  /// function
+  /// new try
+
+  late Web3Client ethClient;
+
+// Ethereum address
+  final String myAddress = "0x3C3f0990BAcd02C0ed689bf4Dd6CE18cD3D6A0bF";
+
+// URL from Infura
+  final String blockchainUrl =
+      "https://sepolia.infura.io/v3/4887f9655ec94842a2d3206deae69ad2";
 
   @override
   Widget build(BuildContext context) {

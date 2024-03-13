@@ -262,6 +262,23 @@ class _HomeState extends State<Home> {
                   Spacer(),
                 ],
               ),
+              Row(
+                children: [
+                  Spacer(),
+                  ElevatedButton(
+                      onPressed: () {
+                        QuickAlert.show(
+                          context: context,
+                          type: QuickAlertType.success,
+                          text: 'working!',
+                          autoCloseDuration: const Duration(seconds: 4),
+                          showConfirmBtn: false,
+                        );
+                      },
+                      child: Text('alert test')),
+                  Spacer(),
+                ],
+              ),
               Spacer(),
             ],
           ),

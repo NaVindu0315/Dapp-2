@@ -70,6 +70,24 @@ class _HomeState extends State<Home> {
     return result;
   }
 
+  Future<String> newfunction(String name) async {
+    final pakeclient = Web3Client(blockchainUrl, httpClient);
+    final contract = await getContract();
+    final function = contract.function(name);
+    final result = await pakeclient
+        .call(contract: contract, function: function, params: []);
+    String lg = result.toString();
+    print(lg);
+    QuickAlert.show(
+      context: context,
+      type: QuickAlertType.success,
+      text: '$lg!',
+      autoCloseDuration: const Duration(seconds: 4),
+      showConfirmBtn: false,
+    );
+    return lg;
+  }
+
 /*
 //me helo eka hri gye na
 
@@ -101,14 +119,7 @@ class _HomeState extends State<Home> {
                       onPressed: () {
                         getbalance();
                         callFunction("get_output");
-
-                        QuickAlert.show(
-                          context: context,
-                          type: QuickAlertType.success,
-                          text: 'Transaction Completed Successfully!',
-                          autoCloseDuration: const Duration(seconds: 4),
-                          showConfirmBtn: false,
-                        );
+                        newfunction("get_output");
                       },
                       child: Text('Test')),
                   Spacer(),

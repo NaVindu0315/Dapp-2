@@ -41,6 +41,30 @@ class _HomeState extends State<Home> {
 
   ///function begin
 
+  ///to get json from firebase
+
+  Future<String> getnamejson() async {
+    final ref = FirebaseStorage.instance.ref('c/namecontract.json');
+    final bytes = await ref.getData();
+    final jsonString = utf8.decode(bytes!);
+    return (jsonString);
+  }
+
+  Future<String> nameagejson() async {
+    final ref = FirebaseStorage.instance.ref('c/agecontract.json');
+    final bytes = await ref.getData();
+    final jsonString = utf8.decode(bytes!);
+    return (jsonString);
+  }
+
+  Future<String> getmyjson() async {
+    final ref = FirebaseStorage.instance.ref('c/contract.json');
+    final bytes = await ref.getData();
+    final jsonString = utf8.decode(bytes!);
+    return (jsonString);
+  }
+
+  ///end
   /// function
   /// new try
 
@@ -52,11 +76,6 @@ class _HomeState extends State<Home> {
 // URL from Infura
   final String blockchainUrl =
       "https://sepolia.infura.io/v3/4887f9655ec94842a2d3206deae69ad2";
-
-  Future<String> loadAbiFile() async {
-    final abiFile = await rootBundle.loadString('assets/contract.json');
-    return abiFile;
-  }
 
   Future<DeployedContract> getContract() async {
     String contractAddress = "0xc691a5f193883bE1Ef4d03f0c7f60De8B88913A3";
@@ -73,6 +92,31 @@ class _HomeState extends State<Home> {
 
     return contract;
   }
+
+  ///functions to get contracts
+  Future<DeployedContract> getnamecontract() async {
+    String contractAddress = "0x3787D8F37054cf954c02eAF65C8b37FB97946de5";
+
+    final abiFile = await getnamejson();
+    final namecontract = DeployedContract(
+        ContractAbi.fromJson(abiFile, 'Voting'),
+        EthereumAddress.fromHex(contractAddress));
+    print("payyya");
+    return namecontract;
+  }
+
+  Future<DeployedContract> getagecontract() async {
+    String contractAddress = "0xd34780b7c47de1Cb09E81D4e9dE74a78CC821291";
+
+    final abiFile = await nameagejson();
+    final agecontract = DeployedContract(
+        ContractAbi.fromJson(abiFile, 'Voting'),
+        EthereumAddress.fromHex(contractAddress));
+    print("payyya");
+    return agecontract;
+  }
+
+  ///contract functions end
 
   Future<List<dynamic>> callFunction(String name) async {
     final pakeclient = Web3Client(blockchainUrl, httpClient);
@@ -104,9 +148,9 @@ class _HomeState extends State<Home> {
 
   ///for name
 
-  Future<DeployedContract> getnamecontract() async {
+  /* Future<DeployedContract> getnamecontract() async {
     // Obtain our smart contract using rootbundle to access our json file
-    String abiFile = await rootBundle.loadString("assets/namecontract.json");
+    String abiFile = await getnamejson();
 
     String contractAddress = "0x3787D8F37054cf954c02eAF65C8b37FB97946de5";
 
@@ -115,8 +159,8 @@ class _HomeState extends State<Home> {
         EthereumAddress.fromHex(contractAddress));
 
     return namecontract;
-  }
-
+  }*/
+  late String newname;
   Future<List<dynamic>> callnameFunction(String name) async {
     final pakeclient = Web3Client(blockchainUrl, httpClient);
     final contract = await getnamecontract();
@@ -124,10 +168,45 @@ class _HomeState extends State<Home> {
     final result = await pakeclient
         .call(contract: contract, function: function, params: []);
     print(result);
+    if (result.length == 1 && result[0] is String) {
+      newname = result[0] as String;
+    } else {
+      newname = 'Result is not a string.';
+    }
+    QuickAlert.show(
+      context: context,
+      type: QuickAlertType.success,
+      text: '$newname',
+      autoCloseDuration: const Duration(seconds: 4),
+      showConfirmBtn: false,
+    );
     return result;
   }
 
-  late String newvalue;
+  late String values;
+  Future<List<dynamic>> callagefunction(String name) async {
+    final pakeclient = Web3Client(blockchainUrl, httpClient);
+    final contract = await getagecontract();
+    final function = contract.function(name);
+    final result = await pakeclient
+        .call(contract: contract, function: function, params: []);
+    print(result);
+    if (result.length == 1 && result[0] is String) {
+      values = result[0] as String;
+    } else {
+      values = 'Result is not a string.';
+    }
+    QuickAlert.show(
+      context: context,
+      type: QuickAlertType.success,
+      text: '$values',
+      autoCloseDuration: const Duration(seconds: 4),
+      showConfirmBtn: false,
+    );
+    return result;
+  }
+
+  /* late String newvalue;
   Future<String> namefunction(String name) async {
     final pakeclient = Web3Client(blockchainUrl, httpClient);
     final contract = await getnamecontract();
@@ -150,7 +229,7 @@ class _HomeState extends State<Home> {
       showConfirmBtn: false,
     );
     return lg;
-  }
+  }*/
 
   ///name end
   ///
@@ -207,7 +286,7 @@ class _HomeState extends State<Home> {
     return (jsonString);
   }
 
-  Future<DeployedContract> getagecontract() async {
+  /* Future<DeployedContract> getagecontract() async {
     // Obtain our smart contract using rootbundle to access our json file
     String abiFile = await getjson();
 
@@ -218,7 +297,7 @@ class _HomeState extends State<Home> {
         EthereumAddress.fromHex(contractAddress));
 
     return agecontract;
-  }
+  }*/
 
 /*
   @override
@@ -241,7 +320,7 @@ class _HomeState extends State<Home> {
                   ElevatedButton(
                       onPressed: () {
                         getbalance();
-                        callFunction("get_output");
+                        //callFunction("get_output");
                         newfunction("get_output");
                       },
                       child: Text('First')),
@@ -253,7 +332,7 @@ class _HomeState extends State<Home> {
                   Spacer(),
                   ElevatedButton(
                       onPressed: () {
-                        namefunction("getname");
+                        callnameFunction("getname");
                       },
                       child: Text('Name')),
                   Spacer(),
@@ -264,12 +343,15 @@ class _HomeState extends State<Home> {
                   Spacer(),
                   ElevatedButton(
                       onPressed: () {
-                        agefunction("getname");
+                        //  agefunction("getname");
+                        callagefunction("getname");
                       },
                       child: Text('Name ')),
                   ElevatedButton(
                       onPressed: () {
-                        agefunction("getdob");
+                        //  agefunction("getdob");
+
+                        callagefunction("getdob");
                       },
                       child: Text(' Birthday')),
                   Spacer(),
@@ -299,7 +381,7 @@ class _HomeState extends State<Home> {
                       onPressed: () {
                         loadJsonFromFirebase();
                       },
-                      child: Text('alert test')),
+                      child: Text('Json Test')),
                   Spacer(),
                 ],
               ),

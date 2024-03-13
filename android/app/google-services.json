@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "587545792630",
+    "project_id": "dapp2-203f3",
+    "storage_bucket": "dapp2-203f3.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:587545792630:android:0ad081203590df8fe7cf57",
+        "android_client_info": {
+          "package_name": "com.example.dapp2"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAPDsoYidC_c2qqSU4g-rtJeo2np2L6iqU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

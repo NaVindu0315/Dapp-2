@@ -25,6 +25,15 @@ class _HomeState extends State<Home> {
     print(balance.getValueInUnit(EtherUnit.ether));
   }
 
+  Future<double> setbalance() async {
+    var bl = 0.0;
+    var ethClient = Web3Client(apiUrl, httpClient);
+    var address = credentials.address;
+    EtherAmount balance = await ethClient.getBalance(address);
+    bl = balance.getValueInUnit(EtherUnit.ether);
+    return bl;
+  }
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -39,13 +48,23 @@ class _HomeState extends State<Home> {
                   Spacer(),
                   Text(
                     'HI',
-                    style: TextStyle(fontSize: 30.0),
+                    style: TextStyle(fontSize: 15.0),
                   ),
                   ElevatedButton(
                       onPressed: () {
                         getbalance();
                       },
                       child: Text('Test')),
+                  Spacer(),
+                ],
+              ),
+              Row(
+                children: [
+                  Spacer(),
+                  Text(
+                    'Balance',
+                    style: TextStyle(fontSize: 15.0),
+                  ),
                   Spacer(),
                 ],
               ),

@@ -41,6 +41,7 @@ dependencies:
   stream_channel: ^2.1.2
   json_rpc_2: ^3.0.2
   quickalert: ^1.1.0
+  firebase_core: ^2.24.0
 
 dev_dependencies:
   flutter_test:

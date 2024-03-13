@@ -65,7 +65,7 @@ class _HomeState extends State<Home> {
 
     final contract = DeployedContract(ContractAbi.fromJson(abiFile, "Voting"),
         EthereumAddress.fromHex(contractAddress));*/
-    final abiFile = await loadAbiFile();
+    final abiFile = await getjson();
     final contract = DeployedContract(ContractAbi.fromJson(abiFile, 'Voting'),
         EthereumAddress.fromHex(contractAddress));
     print("payyya");
@@ -156,19 +156,6 @@ class _HomeState extends State<Home> {
   ///
   /// name and age contract
 
-  Future<DeployedContract> getagecontract() async {
-    // Obtain our smart contract using rootbundle to access our json file
-    String abiFile = await rootBundle.loadString("assets/agecontract.json");
-
-    String contractAddress = "0xd34780b7c47de1Cb09E81D4e9dE74a78CC821291";
-
-    final agecontract = DeployedContract(
-        ContractAbi.fromJson(abiFile, "Voting"),
-        EthereumAddress.fromHex(contractAddress));
-
-    return agecontract;
-  }
-
   Future<List<dynamic>> callageFunction(String name) async {
     final pakeclient = Web3Client(blockchainUrl, httpClient);
     final contract = await getagecontract();
@@ -213,6 +200,32 @@ class _HomeState extends State<Home> {
     print(jsonString);
   }
 
+  Future<String> getjson() async {
+    final ref = FirebaseStorage.instance.ref('c/contract.json');
+    final bytes = await ref.getData();
+    final jsonString = utf8.decode(bytes!);
+    return (jsonString);
+  }
+
+  Future<DeployedContract> getagecontract() async {
+    // Obtain our smart contract using rootbundle to access our json file
+    String abiFile = await getjson();
+
+    String contractAddress = "0xd34780b7c47de1Cb09E81D4e9dE74a78CC821291";
+
+    final agecontract = DeployedContract(
+        ContractAbi.fromJson(abiFile, "Voting"),
+        EthereumAddress.fromHex(contractAddress));
+
+    return agecontract;
+  }
+
+/*
+  @override
+  void initState() {
+    super.initState();
+
+  }*/
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -274,6 +287,17 @@ class _HomeState extends State<Home> {
                           autoCloseDuration: const Duration(seconds: 4),
                           showConfirmBtn: false,
                         );
+                      },
+                      child: Text('alert test')),
+                  Spacer(),
+                ],
+              ),
+              Row(
+                children: [
+                  Spacer(),
+                  ElevatedButton(
+                      onPressed: () {
+                        loadJsonFromFirebase();
                       },
                       child: Text('alert test')),
                   Spacer(),

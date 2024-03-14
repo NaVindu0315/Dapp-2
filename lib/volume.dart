@@ -2,7 +2,6 @@ import 'dart:async';
 
 import 'package:dapp2/home.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_android_volume_keydown/flutter_android_volume_keydown.dart';
 
 class Volume extends StatefulWidget {
   const Volume({Key? key}) : super(key: key);
@@ -12,26 +11,6 @@ class Volume extends StatefulWidget {
 }
 
 class _VolumeState extends State<Volume> {
-  StreamSubscription<HardwareButton>? subscription;
-  @override
-  void initState() {
-    super.initState();
-  }
-
-  void startListening() {
-    subscription = FlutterAndroidVolumeKeydown.stream.listen((event) {
-      if (event == HardwareButton.volume_down) {
-        print("Volume down received");
-      } else if (event == HardwareButton.volume_up) {
-        print("Volume up received");
-      }
-    });
-  }
-
-  void stopListening() {
-    subscription?.cancel();
-  }
-
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -43,11 +22,9 @@ class _VolumeState extends State<Volume> {
               children: [
                 Spacer(),
                 ElevatedButton(
-                    onPressed: startListening,
-                    child: const Text("Start listsening")),
+                    onPressed: null, child: const Text("Start listsening")),
                 ElevatedButton(
-                    onPressed: stopListening,
-                    child: const Text("Stop listening")),
+                    onPressed: null, child: const Text("Stop listening")),
                 Spacer(),
               ],
             ),

@@ -1,5 +1,6 @@
 import 'package:dapp2/home.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_android_volume_keydown/flutter_android_volume_keydown.dart';
 
 class Volume extends StatefulWidget {
   const Volume({Key? key}) : super(key: key);
@@ -20,7 +21,7 @@ class _VolumeState extends State<Volume> {
               children: [
                 Spacer(),
                 Text(
-                  'Volume Detection',
+                  'Volume Det ection',
                   style: TextStyle(fontSize: 30.0),
                 ),
                 Spacer(),

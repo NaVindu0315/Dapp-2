@@ -293,6 +293,17 @@ class _HomeState extends State<Home> {
                   Spacer(),
                 ],
               ),
+              Row(
+                children: [
+                  Spacer(),
+                  ElevatedButton(
+                      onPressed: () {
+                        loadJsonFromFirebase();
+                      },
+                      child: Text('Next page')),
+                  Spacer(),
+                ],
+              ),
               Spacer(),
             ],
           ),

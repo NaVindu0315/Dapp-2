@@ -1,3 +1,4 @@
+import 'package:dapp2/home.dart';
 import 'package:flutter/material.dart';
 
 class Volume extends StatefulWidget {
@@ -29,7 +30,12 @@ class _VolumeState extends State<Volume> {
               children: [
                 Spacer(),
                 ElevatedButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => Home()),
+                    );
+                  },
                   child: Text(
                     'Volume Detection',
                     style: TextStyle(fontSize: 30.0),

@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:dapp2/volume.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -298,7 +299,10 @@ class _HomeState extends State<Home> {
                   Spacer(),
                   ElevatedButton(
                       onPressed: () {
-                        loadJsonFromFirebase();
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => Volume()),
+                        );
                       },
                       child: Text('Next page')),
                   Spacer(),

@@ -1,17 +1,43 @@
 import 'package:flutter/material.dart';
 
-class StarRating extends StatelessWidget {
-  final int rating;
+class InteractiveRatingWidget extends StatefulWidget {
+  final int maxRating;
+  final IconData filledStar;
+  final IconData unfilledStar;
+  final ValueChanged<int> onChanged;
 
-  StarRating(this.rating);
+  InteractiveRatingWidget({
+    this.maxRating = 5,
+    this.filledStar = Icons.star,
+    this.unfilledStar = Icons.star_border,
+    required this.onChanged,
+  });
+
+  @override
+  _InteractiveRatingWidgetState createState() =>
+      _InteractiveRatingWidgetState();
+}
+
+class _InteractiveRatingWidgetState extends State<InteractiveRatingWidget> {
+  int _rating = 0;
 
   @override
   Widget build(BuildContext context) {
     return Row(
-      children: List.generate(5, (index) {
-        return Icon(
-          index < rating ? Icons.star : Icons.star_border,
-          color: Colors.green,
+      mainAxisSize: MainAxisSize.min,
+      children: List.generate(widget.maxRating, (index) {
+        return IconButton(
+          icon: index < _rating
+              ? Icon(widget.filledStar)
+              : Icon(widget.unfilledStar),
+          onPressed: () {
+            setState(() {
+              _rating = index + 1;
+            });
+            if (widget.onChanged != null) {
+              widget.onChanged(_rating);
+            }
+          },
         );
       }),
     );

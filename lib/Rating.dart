@@ -16,11 +16,12 @@ class _RatingclzState extends State<Ratingclz> {
         title: Text('Star Rating Example'),
       ),
       body: Center(
-        child: StarRating(
-          onChanged: (value) {
-            setState(() {
-              _rating = value;
-            });
+        child: InteractiveRatingWidget(
+          maxRating: 5,
+          filledStar: Icons.star,
+          unfilledStar: Icons.star_border,
+          onChanged: (rating) {
+            print('Rating changed to $rating');
           },
         ),
       ),
